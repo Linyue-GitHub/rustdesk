@@ -36,6 +36,7 @@ WindowType? kWindowType;
 late List<String> kBootArgs;
 
 Future<void> main(List<String> args) async {
+  earlyAssert();
   WidgetsFlutterBinding.ensureInitialized();
 
   debugPrint("launch args: $args");
@@ -475,7 +476,8 @@ class _AppState extends State<App> with WidgetsBindingObserver {
               : (context, child) {
                   child = _keepScaleBuilder(context, child);
                   child = botToastBuilder(context, child);
-                  if (isDesktop && desktopType == DesktopType.main) {
+                  if ((isDesktop && desktopType == DesktopType.main) ||
+                      isWebDesktop) {
                     child = keyListenerBuilder(context, child);
                   }
                   if (isLinux) {
